@@ -8,7 +8,7 @@ const getAuthHeaders = () => ({
 
 // 🧩 GET /api/entries?dateKey=YYYY-MM-DD
 export const getEntryByDate = async (dateKey) => {
-  const res = await axios.get(`${API_BASE}/api/entries?dateKey=${dateKey}`, {
+  const res = await axios.get(`${API_BASE}api/entries?dateKey=${dateKey}`, {
     headers: getAuthHeaders(),
   });
   return res.data.entry || { dateKey, data: {} };
@@ -26,7 +26,7 @@ export const upsertEntry = async (dateKey, data) => {
 
 // 🧩 DELETE /api/entries/:dateKey
 export const deleteEntryByDate = async (dateKey) => {
-  const res = await axios.delete(`${API_BASE}/api/entries/${dateKey}`, {
+  const res = await axios.delete(`${API_BASE}api/entries/${dateKey}`, {
     headers: getAuthHeaders(),
   });
   return res.data;
@@ -34,7 +34,7 @@ export const deleteEntryByDate = async (dateKey) => {
 
 // 🧩 GET /api/entries/history?limit=30
 export const getEntriesHistory = async (limit = 30) => {
-  const res = await axios.get(`${API_BASE}/api/entries/history?limit=${limit}`, {
+  const res = await axios.get(`${API_BASE}api/entries/history?limit=${limit}`, {
     headers: getAuthHeaders(),
   });
   return res.data.entries || [];
