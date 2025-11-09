@@ -27,6 +27,19 @@ app.use(cors({
 }));
 
 app.get("/api/health", (req, res) => res.json({ ok: true }));
+app.post("/superadmin", (req, res) => {
+  const { username, password } = req.body; 
+
+  if (username === "mrf123" && password === "mrf1234") {
+    res.status(200).json({ message: "Access accepted " });
+  } else if(username === "gram123" && password === "gram1234") {
+    res.status(200).json({ message: "Access accepted " });
+  }else if(username === "zilla123" && password === "zilla1234") {
+    res.status(200).json({message: "Access accepted"});
+  }else{
+    res.status(401).json({ message: "Access denied" });
+  }
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/materials", materialsRoutes);
