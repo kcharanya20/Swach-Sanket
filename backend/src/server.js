@@ -12,6 +12,7 @@ import materialsRoutes from "./routes/materials.routes.js";
 import entriesRoutes from "./routes/entries.routes.js";
 import analyticsRoutes from "./routes/analytics.routes.js";
 
+
 const app = express();
 
 app.use(helmet());
@@ -20,7 +21,7 @@ app.use(morgan("dev"));
 app.use(rateLimit(60_000, 300)); // 300 req/min per IP
 
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+  origin: "*",
   credentials: false,
   allowedHeaders: ["Content-Type", "Authorization"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
