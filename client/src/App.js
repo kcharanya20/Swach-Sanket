@@ -16,15 +16,15 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/login" element={<Login />} />
 
           <Route
             path="/dashboard"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <Dashboard />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           />
 
