@@ -505,6 +505,7 @@
 //   </div>
 // );
 
+<<<<<<< HEAD
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -519,6 +520,17 @@ import {
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useI18n } from "../i18n/I18nProvider";
+=======
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, LineChart, Line, Cell
+} from "recharts";
+import {
+  Calendar, Search, X, Clock, Home, Plus,
+  LogOut, Trash2, CheckCircle, Eye
+} from "lucide-react";
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
 
 import {
   getEntryByDate,
@@ -526,12 +538,15 @@ import {
   deleteEntryByDate,
   getEntriesHistory,
 } from "../services/entriesService";
+<<<<<<< HEAD
 import {
   getTransactionsByDate,
   createTransaction,
   getTransactionsHistory,
   deleteTransaction,
 } from "../services/transactionsService";
+=======
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
 
 // -------------------- Static Material Data --------------------
 const MATERIALS = [
@@ -555,18 +570,25 @@ const flatMaterials = MATERIALS.flatMap(cat =>
 
 // -------------------- Main Component --------------------
 export default function Dashboard() {
+<<<<<<< HEAD
   const { t, lang, setLang } = useI18n();
+=======
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const [view, setView] = useState("dashboard");
   const [entries, setEntries] = useState({});
   const [data, setData] = useState({});
   const [originalData, setOriginalData] = useState({});
+<<<<<<< HEAD
   const [selectedDate, setSelectedDate] = useState(today); // Allow selecting any date
+=======
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
   const [searchTerm, setSearchTerm] = useState("");
   const [notification, setNotification] = useState({ show: false, message: "", type: "success" });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+<<<<<<< HEAD
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const dashboardRef = useRef(null);
   
@@ -581,6 +603,8 @@ export default function Dashboard() {
     notes: "",
   });
   const [savingTransaction, setSavingTransaction] = useState(false);
+=======
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
 
   // ✅ Notification helper
   const notify = useCallback((message, type = "success") => {
@@ -609,6 +633,7 @@ export default function Dashboard() {
         if (Object.keys(todayData).length > 0) entriesMap[today] = todayData;
 
         setEntries(entriesMap);
+<<<<<<< HEAD
 
         // Fetch transactions
         try {
@@ -618,6 +643,8 @@ export default function Dashboard() {
           console.error("Error fetching transactions:", txnErr);
           // Don't fail the whole load if transactions fail
         }
+=======
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
       } catch (err) {
         console.error("Error fetching entries:", err);
         notify("❌ Failed to load data", "error");
@@ -628,6 +655,7 @@ export default function Dashboard() {
     fetchData();
   }, [today, notify]);
 
+<<<<<<< HEAD
   // Fetch entry data when selected date changes
   useEffect(() => {
     if (view === "entry" && selectedDate) {
@@ -647,6 +675,8 @@ export default function Dashboard() {
     }
   }, [selectedDate, view]);
 
+=======
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
   // Detect unsaved changes
   useEffect(() => {
     const hasChanges = JSON.stringify(data) !== JSON.stringify(originalData);
@@ -662,9 +692,15 @@ export default function Dashboard() {
     }));
   }, []);
 
+<<<<<<< HEAD
   // Submit handler - now uses selectedDate instead of today
   const handleSubmit = async () => {
     if (!window.confirm(`Are you sure you want to submit the data for ${new Date(selectedDate).toLocaleDateString()}?`)) return;
+=======
+  // Submit handler
+  const handleSubmit = async () => {
+    if (!window.confirm("Are you sure you want to submit the data?")) return;
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
 
     setSaving(true);
     try {
@@ -674,11 +710,19 @@ export default function Dashboard() {
         if (!isNaN(val) && val > 0) cleanedData[key] = val;
       });
 
+<<<<<<< HEAD
       await upsertEntry(selectedDate, cleanedData);
       setOriginalData(cleanedData);
       setData(cleanedData);
       setEntries(prev => ({ ...prev, [selectedDate]: cleanedData }));
       notify(`✅ Data saved successfully for ${new Date(selectedDate).toLocaleDateString()}!`, "success");
+=======
+      await upsertEntry(today, cleanedData);
+      setOriginalData(cleanedData);
+      setData(cleanedData);
+      setEntries(prev => ({ ...prev, [today]: cleanedData }));
+      notify("✅ Data saved successfully!", "success");
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
       setHasUnsavedChanges(false);
       setTimeout(() => setView("dashboard"), 1000);
     } catch (err) {
@@ -689,6 +733,7 @@ export default function Dashboard() {
     }
   };
 
+<<<<<<< HEAD
   // Transaction handlers
   const handleTransactionSubmit = async (e) => {
     e.preventDefault();
@@ -742,6 +787,8 @@ export default function Dashboard() {
     }
   };
 
+=======
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
   // Delete handler
   const handleDelete = useCallback(async (date) => {
     if (!window.confirm(`Delete entry for ${new Date(date).toLocaleDateString()}?`)) return;
@@ -788,6 +835,7 @@ export default function Dashboard() {
     });
   }, [entries]);
 
+<<<<<<< HEAD
   // Calculate insights and highlights
   const highlights = useMemo(() => {
     const totalDays = Object.keys(entries).length;
@@ -1103,6 +1151,8 @@ export default function Dashboard() {
     }
   };
 
+=======
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
@@ -1120,6 +1170,7 @@ export default function Dashboard() {
       <header className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div>
+<<<<<<< HEAD
             <h1 className="text-2xl md:text-3xl font-bold">{t("app.title")}</h1>
             <p className="text-purple-100 text-xs md:text-sm">{t("app.subtitle")}</p>
           </div>
@@ -1146,16 +1197,38 @@ export default function Dashboard() {
               <span className="hidden md:inline">{t("actions.logout")}</span>
             </button>
           </div>
+=======
+            <h1 className="text-2xl md:text-3xl font-bold">MRF Dashboard</h1>
+            <p className="text-purple-100 text-xs md:text-sm">Zilla Panchayat Material Recovery</p>
+          </div>
+          <button
+            onClick={() => {
+              if (hasUnsavedChanges && !window.confirm("You have unsaved changes. Proceed to logout?")) return;
+              localStorage.removeItem("auth_token");
+              window.location.href = "/";
+            }}
+            className="bg-white/20 hover:bg-white/30 px-3 md:px-4 py-2 rounded-lg transition flex items-center gap-2"
+          >
+            <LogOut size={18} />
+            <span className="hidden md:inline">Logout</span>
+          </button>
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
         </div>
       </header>
 
       {/* NAVIGATION */}
       <nav className="bg-white shadow-md sticky top-[64px] md:top-[72px] z-40">
         <div className="flex">
+<<<<<<< HEAD
           {[{ id: "dashboard", icon: Home, label: t("nav.dashboard") },
             { id: "entry", icon: Plus, label: t("nav.entry") },
             { id: "transactions", icon: Truck, label: t("nav.transactions") },
             { id: "history", icon: Clock, label: t("nav.history") }].map(({ id, icon: Icon, label }) => (
+=======
+          {[{ id: "dashboard", icon: Home, label: "Dashboard" },
+            { id: "entry", icon: Plus, label: "Entry" },
+            { id: "history", icon: Clock, label: "History" }].map(({ id, icon: Icon, label }) => (
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
             <button
               key={id}
               onClick={() => {
@@ -1175,8 +1248,13 @@ export default function Dashboard() {
         </div>
       </nav>
 
+<<<<<<< HEAD
       <main className="container mx-auto px-4 py-6 md:py-8" ref={view === "dashboard" ? dashboardRef : null}>
         {view === "dashboard" && <DashboardView stats={stats} historyData={historyData} entries={entries} flatMaterials={flatMaterials} highlights={highlights} keyPoints={keyPoints} recommendations={recommendations} transactions={transactions} today={today} t={t} />}
+=======
+      <main className="container mx-auto px-4 py-6 md:py-8">
+        {view === "dashboard" && <DashboardView stats={stats} historyData={historyData} entries={entries} flatMaterials={flatMaterials} />}
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
         {view === "entry" && (
           <EntryView
             MATERIALS={MATERIALS}
@@ -1187,6 +1265,7 @@ export default function Dashboard() {
             setSearchTerm={setSearchTerm}
             saving={saving}
             hasUnsavedChanges={hasUnsavedChanges}
+<<<<<<< HEAD
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             today={today}
@@ -1204,6 +1283,11 @@ export default function Dashboard() {
             flatMaterials={flatMaterials}
           />
         )}
+=======
+            today={today}
+          />
+        )}
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
         {view === "history" && (
           <HistoryView entries={entries} handleDelete={handleDelete} setView={setView} today={today} />
         )}
@@ -1224,6 +1308,7 @@ export default function Dashboard() {
   );
 }
 
+<<<<<<< HEAD
 const DashboardView = ({ stats, historyData, entries, flatMaterials, highlights, keyPoints, recommendations, transactions, today, t }) => {
   const totalDays = Object.keys(entries).length;
   const completionRate = (stats.filledCount / flatMaterials.length) * 100;
@@ -1468,6 +1553,57 @@ const MetricItem = ({ label, value }) => {
     </div>
   );
 };
+=======
+const DashboardView = ({ stats, historyData, entries, flatMaterials }) => (
+  <div className="space-y-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <StatCard label="Today's Total" value={stats.totalWeight.toFixed(2)} unit="kg" gradient="from-purple-500 to-indigo-600" />
+      <StatCard label="Materials Logged" value={stats.filledCount} unit={`of ${flatMaterials.length}`} gradient="from-pink-500 to-rose-600" />
+      <StatCard label="Total Days" value={Object.keys(entries).length} unit="recorded" gradient="from-cyan-500 to-blue-600" />
+    </div>
+
+    {stats.chartData.length > 0 && (
+      <div className="bg-white rounded-2xl shadow-lg p-6">
+        <h3 className="text-xl font-bold mb-4">Today's Category Distribution</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={stats.chartData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="category" angle={-45} textAnchor="end" height={80} />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="total" radius={[8, 8, 0, 0]}>
+              {stats.chartData.map((entry, idx) => <Cell key={idx} fill={entry.color} />)}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    )}
+
+    {historyData.length > 1 && (
+      <div className="bg-white rounded-2xl shadow-lg p-6">
+        <h3 className="text-xl font-bold mb-4">7-Day Trend</h3>
+        <ResponsiveContainer width="100%" height={250}>
+          <LineChart data={historyData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="total" stroke="#8b5cf6" strokeWidth={3} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    )}
+
+    {stats.totalWeight === 0 && (
+      <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
+        <div className="text-6xl mb-4">📊</div>
+        <h3 className="text-2xl font-bold text-gray-700 mb-2">No data for today</h3>
+        <p className="text-gray-500 mb-6">Start by entering material weights for today</p>
+      </div>
+    )}
+  </div>
+);
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
 
 const StatCard = ({ label, value, unit, gradient }) => (
   <div className={`bg-gradient-to-br ${gradient} text-white rounded-2xl shadow-lg p-6`}>
@@ -1477,7 +1613,11 @@ const StatCard = ({ label, value, unit, gradient }) => (
   </div>
 );
 
+<<<<<<< HEAD
 const EntryView = ({ MATERIALS, data, updateValue, handleSubmit, searchTerm, setSearchTerm, saving, hasUnsavedChanges, selectedDate, setSelectedDate, today }) => {
+=======
+const EntryView = ({ MATERIALS, data, updateValue, handleSubmit, searchTerm, setSearchTerm, saving, hasUnsavedChanges, today }) => {
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
   const [viewMode, setViewMode] = useState("table");
   const inputRefs = React.useRef({});
   
@@ -1519,6 +1659,7 @@ const EntryView = ({ MATERIALS, data, updateValue, handleSubmit, searchTerm, set
     <div className="space-y-6">
       <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl shadow-xl p-6">
         <div className="flex items-center justify-between mb-4">
+<<<<<<< HEAD
           <div className="flex-1">
             <div className="text-sm opacity-90 mb-2">Recording for</div>
             <div className="flex items-center gap-4 flex-wrap">
@@ -1540,6 +1681,14 @@ const EntryView = ({ MATERIALS, data, updateValue, handleSubmit, searchTerm, set
                   Past Date
                 </span>
               )}
+=======
+          <div>
+            <div className="text-sm opacity-90">Recording for</div>
+            <div className="text-2xl md:text-3xl font-bold">
+              {new Date(today).toLocaleDateString('en-US', { 
+                weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
+              })}
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
             </div>
           </div>
           <Calendar size={40} className="opacity-80" />
@@ -1804,6 +1953,7 @@ const HistoryView = ({ entries, handleDelete, setView, today }) => {
       </div>
     )}
   </div>
+<<<<<<< HEAD
 );
 };
 
@@ -2069,3 +2219,6 @@ const TransactionsView = ({ transactions, transactionForm, setTransactionForm, h
     </div>
   );
 };
+=======
+);};
+>>>>>>> d078685db948fbf793c5b85b249f81e55f7e2658
